@@ -1,0 +1,53 @@
+services:
+  postgres:
+    image: postgres:13
+    container_name: postgres
+    environment:
+      POSTGRES_MULTIPLE_DATABASES: personasclientes,cuentas_movimientos
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./init-multiple-dbs.sh:/docker-entrypoint-initdb.d/init-multiple-dbs.sh
+    networks:
+      - bank-network
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - bank-network
+
+  personas-clientes-service:
+    build:
+      context: .
+      dockerfile: Dockerfile-personas
+    ports:
+      - "8081:8081"
+    depends_on:
+      - postgres
+    networks:
+      - bank-network
+
+  cuentas-movimientos-service:
+    build:
+      context: .
+      dockerfile: Dockerfile-cuentas
+    ports:
+      - "8082:8082"
+    depends_on:
+      - postgres
+      - rabbitmq
+    networks:
+      - bank-network
+
+volumes:
+  pgdata:
+
+networks:
+  bank-network:

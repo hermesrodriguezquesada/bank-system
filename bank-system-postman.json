@@ -1,0 +1,169 @@
+{
+  "info": {
+    "name": "Bank System API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Crear Cliente",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Jose Lema\",\n  \"genero\": \"Masculino\",\n  \"edad\": 30,\n  \"identificacion\": \"1234567890\",\n  \"direccion\": \"Otavalo sn y principal\",\n  \"telefono\": \"098254785\",\n  \"clienteId\": \"joselema01\",\n  \"contrasena\": \"1234\",\n  \"estado\": true\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8081/clientes",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "clientes"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Crear Cuenta",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"clienteId\": 1,\n  \"tipo\": \"AHORRO\",\n  \"saldoInicial\": 2000\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8082/cuentas",
+          "host": [
+            "localhost"
+          ],
+          "port": "8082",
+          "path": [
+            "cuentas"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Registrar Movimiento",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"cuentaId\": 1,\n  \"tipo\": \"RETIRO\",\n  \"valor\": 575\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8082/movimientos",
+          "host": [
+            "localhost"
+          ],
+          "port": "8082",
+          "path": [
+            "movimientos"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Consultar Reporte de Estado de Cuenta",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8082/reportes?clienteId=1&fechaInicio=2022-02-01&fechaFin=2022-02-28",
+          "host": [
+            "localhost"
+          ],
+          "port": "8082",
+          "path": [
+            "reportes"
+          ],
+          "query": [
+            {
+              "key": "clienteId",
+              "value": "1"
+            },
+            {
+              "key": "fechaInicio",
+              "value": "2022-02-01"
+            },
+            {
+              "key": "fechaFin",
+              "value": "2022-02-28"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Obtener Cliente por ID",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8081/clientes/1",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "clientes",
+            "1"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Listar Cuentas por Cliente",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8082/cuentas/cliente/1",
+          "host": [
+            "localhost"
+          ],
+          "port": "8082",
+          "path": [
+            "cuentas",
+            "cliente",
+            "1"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Listar Movimientos por Cuenta",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8082/movimientos/cuenta/1",
+          "host": [
+            "localhost"
+          ],
+          "port": "8082",
+          "path": [
+            "movimientos",
+            "cuenta",
+            "1"
+          ]
+        }
+      }
+    }
+  ]
+}
