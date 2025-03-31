@@ -8,6 +8,7 @@ import com.tcs.cuentas_movimientos_service.service.CuentaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,7 +34,12 @@ public class CuentaServiceImpl implements CuentaService {
 
     @Override
     public List<CuentaResponseDTO> obtenerCuentasPorCliente(Long clienteId) {
-        return cuentaRepository.findByClienteId(clienteId).stream()
+        List<Cuenta> cuentas = cuentaRepository.findByClienteId(clienteId);
+        if (cuentas == null || cuentas.isEmpty()) {
+            return Collections.emptyList();
+        }
+    
+        return cuentas.stream()
                 .map(this::mapToDTO)
                 .collect(Collectors.toList());
     }
